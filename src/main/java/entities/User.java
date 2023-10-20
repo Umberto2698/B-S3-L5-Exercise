@@ -14,7 +14,7 @@ public class User {
     private String surname;
     private Date birtday;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private Set<Loan> loans;
 
     public User() {

@@ -8,18 +8,19 @@ public class JpaUtils {
 
     static {
         try {
-            emf= Persistence.createEntityManagerFactory("gestioneventi");
+            emf = Persistence.createEntityManagerFactory("archive");
 
-        }catch (Throwable ex){
+        } catch (Throwable ex) {
             System.err.println("Initial EntityManagerFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }
-    public static EntityManagerFactory getEmf (){
+
+    public static EntityManagerFactory getEmf() {
         return emf;
     }
 
-    public static void close(){
+    public static void close() {
         emf.close();
     }
 }

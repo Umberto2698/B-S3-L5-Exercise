@@ -8,6 +8,7 @@ import java.util.Random;
 public abstract class Catalog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @Column(name = "i_s_b_n_code")
     private long codiceISBN;
     @Column(name = "title")
@@ -17,7 +18,7 @@ public abstract class Catalog {
     @Column(name = "pages_number")
     private int numeroPagine;
 
-    @OneToOne(mappedBy = "loanedItem")
+    @OneToOne(mappedBy = "loanedItem", cascade = CascadeType.REMOVE)
     private Loan loan;
 
     public Catalog() {

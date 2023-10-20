@@ -1,53 +1,53 @@
 package dao;
 
-import entities.Book;
+import entities.Loan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-public class BookDAO {
+public class LoanDAO {
     private final EntityManager em;
 
-    public BookDAO(EntityManager em) {
+    public LoanDAO(EntityManager em) {
         this.em = em;
     }
 
-    public void save(Book book) {
+    public void save(Loan loan) {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            em.persist(book);
+            em.persist(loan);
             transaction.commit();
-            System.err.println("Libro salvato correttamente");
-            System.out.println(book);
+            System.err.println("Prestito salvato correttamente");
+            System.out.println(loan);
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            System.err.println("Errore durante il salvataggio del libro." + e);
+            System.err.println("Errore durante il salvataggio del prestito." + e);
             throw e;
         }
     }
 
-    public Book getById(long id) {
-        return em.find(Book.class, id);
+    public Loan getById(long id) {
+        return em.find(Loan.class, id);
     }
 
     public void delete(long id) {
-        Book book = em.find(Book.class, id);
-        if (book != null) {
+        Loan loan = em.find(Loan.class, id);
+        if (loan != null) {
             EntityTransaction transaction = em.getTransaction();
             try {
                 transaction.begin();
-                em.remove(book);
+                em.remove(loan);
                 transaction.commit();
-                System.err.println("Libro eliminato correttamente");
-                System.out.println(book);
+                System.err.println("Prestito eliminato correttamente");
+                System.out.println(loan);
             } catch (Exception e) {
                 if (transaction.isActive()) {
                     transaction.rollback();
                 }
-                System.err.println("Errore durante l'eliminazione del libro." + e);
+                System.err.println("Errore durante l'eliminazione del prestotp." + e);
                 throw e;
             }
         }
