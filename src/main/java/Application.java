@@ -36,6 +36,7 @@ public class Application {
 //                cDAO.save(magazineSupplier.get());
 //                uDAO.save(userSupplier.get());
 //            }
+//            USARE QUSTA PARTE DI CODICE SOLO DOPO IL PRIMO AVVIO, CAMBIARE I PARAMETRI DELLE FUNZIONI IN BASE AI VALORI NEL PROPRIO DATABASE.
 //            User u1 = uDAO.getById(2120301079876L);
 //            User u2 = uDAO.getById(6833674386273L);
 //            User u3 = uDAO.getById(9568870164653L);
