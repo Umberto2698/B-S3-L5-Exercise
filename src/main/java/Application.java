@@ -60,7 +60,7 @@ public class Application {
 //                Loan randomLoan = new Loan(loanFromSupplier.getId(), u4, catalog, LocalDate.now().minusDays(103), null);
 //                lDAO.save(randomLoan);
 //            }
-//            cDAO.getLoanedElementsFomUser(1810593753628L).forEach(System.out::println);
+            cDAO.getLoanedElementsFomUser(9568870164653L).forEach(System.out::println);
 //            lDAO.getExpiredLoans().forEach(System.out::println);
         } catch (Exception e) {
             System.out.println(e);
