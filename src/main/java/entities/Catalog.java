@@ -5,10 +5,10 @@ import java.util.Random;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedQuery(name = "findByPubblicationYear", query = "SELECT c FROM Catalog c WHERE c.annoDiPubblicazione = :year")
+@NamedQuery(name = "findByAuthor", query = "SELECT b FROM Book b WHERE b.autore LIKE :author")
 public abstract class Catalog {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     @Column(name = "i_s_b_n_code")
     private long codiceISBN;
     @Column(name = "title")
@@ -40,8 +40,7 @@ public abstract class Catalog {
 
     @Override
     public String toString() {
-        return "id=" + id +
-                ", codiceISBN=" + codiceISBN +
+        return ", codiceISBN=" + codiceISBN +
                 ", titolo='" + titolo + '\'' +
                 ", annoDiPubblicazione=" + annoDiPubblicazione +
                 ", numeroPagine=" + numeroPagine;

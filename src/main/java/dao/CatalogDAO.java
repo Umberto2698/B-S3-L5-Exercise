@@ -1,9 +1,12 @@
 package dao;
 
+import entities.Book;
 import entities.Catalog;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class CatalogDAO {
@@ -31,12 +34,23 @@ public class CatalogDAO {
         }
     }
 
-    public Catalog getById(long id) {
-        System.out.println(em.find(Catalog.class, id));
+    public Catalog getByISBNCode(long id) {
         return em.find(Catalog.class, id);
     }
 
-    public void delete(long id) throws InterruptedException {
+    public List<Catalog> getByPubblicationYear(int year) {
+        TypedQuery<Catalog> getElements = em.createNamedQuery("findByPubblicationYear", Catalog.class);
+        getElements.setParameter("year", year);
+        return getElements.getResultList();
+    }
+
+    public List<Book> getByAuthor(String author) {
+        TypedQuery<Book> getElemets = em.createNamedQuery("findByAuthor", Book.class);
+        getElemets.setParameter("author", author);
+        return getElemets.getResultList();
+    }
+
+    public void deletebyISBNCode(long id) throws InterruptedException {
         Catalog catalog = em.find(Catalog.class, id);
         if (catalog != null) {
             EntityTransaction transaction = em.getTransaction();
