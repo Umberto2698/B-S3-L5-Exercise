@@ -38,7 +38,44 @@ public abstract class Catalog {
         this.codiceISBN = codiceISBN;
     }
 
+    @Override
+    public String toString() {
+        return "id=" + id +
+                ", codiceISBN=" + codiceISBN +
+                ", titolo='" + titolo + '\'' +
+                ", annoDiPubblicazione=" + annoDiPubblicazione +
+                ", numeroPagine=" + numeroPagine;
+    }
+
+    public long getCodiceISBN() {
+        return codiceISBN;
+    }
+
+    public void setCodiceISBN(long codiceISBN) {
+        this.codiceISBN = codiceISBN;
+    }
+
     public String getTitolo() {
-        return this.titolo;
+        return titolo;
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
+    }
+
+    public int getAnnoDiPubblicazione() {
+        return annoDiPubblicazione;
+    }
+
+    public void setAnnoDiPubblicazione(int annoDiPubblicazione) {
+        this.annoDiPubblicazione = annoDiPubblicazione;
+    }
+
+    public int getNumeroPagine() {
+        return numeroPagine;
+    }
+
+    public void setNumeroPagine(int numeroPagine) {
+        this.numeroPagine = numeroPagine;
     }
 }

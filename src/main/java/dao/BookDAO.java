@@ -4,6 +4,7 @@ import entities.Book;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.util.concurrent.TimeUnit;
 
 public class BookDAO {
     private final EntityManager em;
@@ -12,13 +13,14 @@ public class BookDAO {
         this.em = em;
     }
 
-    public void save(Book book) {
+    public void save(Book book) throws InterruptedException {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
             em.persist(book);
             transaction.commit();
             System.err.println("Libro salvato correttamente");
+            TimeUnit.MILLISECONDS.sleep(1000);
             System.out.println(book);
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -33,7 +35,7 @@ public class BookDAO {
         return em.find(Book.class, id);
     }
 
-    public void delete(long id) {
+    public void delete(long id) throws InterruptedException {
         Book book = em.find(Book.class, id);
         if (book != null) {
             EntityTransaction transaction = em.getTransaction();
@@ -42,6 +44,7 @@ public class BookDAO {
                 em.remove(book);
                 transaction.commit();
                 System.err.println("Libro eliminato correttamente");
+                TimeUnit.MILLISECONDS.sleep(1000);
                 System.out.println(book);
             } catch (Exception e) {
                 if (transaction.isActive()) {

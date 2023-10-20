@@ -4,6 +4,7 @@ import entities.Magazine;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.util.concurrent.TimeUnit;
 
 public class MagazineDAO {
     private final EntityManager em;
@@ -12,13 +13,14 @@ public class MagazineDAO {
         this.em = em;
     }
 
-    public void save(Magazine magazine) {
+    public void save(Magazine magazine) throws InterruptedException {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
             em.persist(magazine);
             transaction.commit();
             System.err.println("Rivista salvata correttamente");
+            TimeUnit.MILLISECONDS.sleep(1000);
             System.out.println(magazine);
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -33,7 +35,7 @@ public class MagazineDAO {
         return em.find(Magazine.class, id);
     }
 
-    public void delete(long id) {
+    public void delete(long id) throws InterruptedException {
         Magazine magazine = em.find(Magazine.class, id);
         if (magazine != null) {
             EntityTransaction transaction = em.getTransaction();
@@ -42,6 +44,7 @@ public class MagazineDAO {
                 em.remove(magazine);
                 transaction.commit();
                 System.err.println("Rivista eliminata correttamente:");
+                TimeUnit.MILLISECONDS.sleep(1000);
                 System.out.println(magazine);
             } catch (Exception e) {
                 if (transaction.isActive()) {

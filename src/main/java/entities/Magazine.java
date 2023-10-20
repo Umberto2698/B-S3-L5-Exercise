@@ -31,4 +31,20 @@ public class Magazine extends Catalog {
         super(titolo, annoDiPubblicazione, numeroPagine, codiceISBN);
         this.periodicità = periodicità;
     }
+
+    @Override
+    public String toString() {
+        return "Magazine{" +
+                "periodicità=" + periodicità +
+                super.toString() + "}";
+    }
+
+    public MagazinePeriodicity getPeriodicità() {
+        return periodicità;
+    }
+
+    public void setPeriodicità(MagazinePeriodicity periodicità) {
+        this.periodicità = periodicità;
+    }
+
 }

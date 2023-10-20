@@ -4,6 +4,7 @@ import entities.Loan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.util.concurrent.TimeUnit;
 
 public class LoanDAO {
     private final EntityManager em;
@@ -12,13 +13,14 @@ public class LoanDAO {
         this.em = em;
     }
 
-    public void save(Loan loan) {
+    public void save(Loan loan) throws InterruptedException {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
             em.persist(loan);
             transaction.commit();
             System.err.println("Prestito salvato correttamente");
+            TimeUnit.MILLISECONDS.sleep(1000);
             System.out.println(loan);
         } catch (Exception e) {
             if (transaction.isActive()) {
@@ -29,11 +31,11 @@ public class LoanDAO {
         }
     }
 
-    public Loan getById(long id) {
+    public Loan getById(String id) {
         return em.find(Loan.class, id);
     }
 
-    public void delete(long id) {
+    public void delete(long id) throws InterruptedException {
         Loan loan = em.find(Loan.class, id);
         if (loan != null) {
             EntityTransaction transaction = em.getTransaction();
@@ -42,6 +44,7 @@ public class LoanDAO {
                 em.remove(loan);
                 transaction.commit();
                 System.err.println("Prestito eliminato correttamente");
+                TimeUnit.MILLISECONDS.sleep(1000);
                 System.out.println(loan);
             } catch (Exception e) {
                 if (transaction.isActive()) {

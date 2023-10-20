@@ -2,13 +2,13 @@ import com.github.javafaker.Faker;
 import dao.CatalogDAO;
 import dao.LoanDAO;
 import dao.UserDAO;
-import entities.Book;
-import entities.Magazine;
-import entities.User;
+import entities.*;
 import utils.JpaUtils;
 
 import javax.persistence.EntityManager;
+import java.time.ZoneId;
 import java.util.Locale;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
@@ -24,15 +24,28 @@ public class Application {
         Faker faker = new Faker(Locale.ITALY);
         Supplier<Book> bookSupplier = () -> new Book(faker.book().title(), faker.book().author(), faker.book().genre());
         Supplier<Magazine> magazineSupplier = () -> new Magazine(faker.book().title());
-        Supplier<User> userSupplier = () -> new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday());
+        Supplier<User> userSupplier = () -> new User(faker.name().firstName(), faker.name().lastName(), faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        Supplier<Loan> loanSupplier = () -> new Loan(faker.date().birthday().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
 
         Scanner input = new Scanner(System.in);
         try {
-//            for (int i = 0; i < 5; i++) {
-//                cDAO.save(bookSupplier.get());
-//                cDAO.save(magazineSupplier.get());
-//                uDAO.save(userSupplier.get());
-//            }
+            for (int i = 0; i < 5; i++) {
+                cDAO.save(bookSupplier.get());
+                cDAO.save(magazineSupplier.get());
+                uDAO.save(userSupplier.get());
+            }
+            for (int i = 0; i < 10; i++) {
+                long rdn = new Random().nextLong(1, 5);
+                User randomUser = uDAO.getById(rdn);
+
+                long rdn2 = new Random().nextLong(1, 10);
+                Catalog randomElem = cDAO.getById(rdn2);
+
+                Loan loanFromSupplier = loanSupplier.get();
+                Loan randomLoan = new Loan(loanFromSupplier.getId(), randomUser, randomElem, loanFromSupplier.getLoanStartDate(), loanFromSupplier.getActualReturnDate());
+
+                lDAO.save(randomLoan);
+            }
         } catch (Exception e) {
             System.out.println(e);
         } finally {
@@ -41,19 +54,4 @@ public class Application {
             input.close();
         }
     }
-
-//    public static void creaDisco() {
-//        File file = new File("src/listProducts.txt");
-//    }
-//
-//    public static void salvaSuDisco(List<Catalog> catalogList) {
-//        File file = new File("src/listProducts.txt");
-//        for (Catalog catalog : catalogList) {
-//            try {
-//                FileUtils.writeStringToFile(file, catalog.getTitolo() + System.lineSeparator(), StandardCharsets.UTF_8, true);
-//            } catch (IOException e) {
-//                System.err.println(e.getMessage());
-//            }
-//        }
-//    }
 }
