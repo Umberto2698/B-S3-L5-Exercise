@@ -1,13 +1,16 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Random;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@NamedQuery(name = "findByPubblicationYear", query = "SELECT c FROM Catalog c WHERE c.annoDiPubblicazione = :year")
-@NamedQuery(name = "findByAuthor", query = "SELECT c FROM Catalog c WHERE c.autore IN (SELECT b.autore FROM Book b WHERE LOWER(b.autore) LIKE LOWER(:author))")
-@NamedQuery(name = "findByTitle", query = "SELECT c FROM Catalog c WHERE LOWER(c.titolo) LIKE LOWER(CONCAT(:title, '%'))")
+@NamedQuery(name = "findFromISBNCode", query = "SELECT c FROM Catalog c WHERE c.codiceISBN = :code")
+@NamedQuery(name = "findFromPubblicationYear", query = "SELECT c FROM Catalog c WHERE c.annoDiPubblicazione = :year")
+@NamedQuery(name = "findFromAuthor", query = "SELECT c FROM Catalog c WHERE c.autore IN (SELECT b.autore FROM Book b WHERE LOWER(b.autore) LIKE LOWER(:author))")
+@NamedQuery(name = "findFromTitle", query = "SELECT c FROM Catalog c WHERE LOWER(c.titolo) LIKE LOWER(CONCAT(:title, '%'))")
+@NamedQuery(name = "getLoanedElementsFromUser", query = "SELECT c FROM Catalog c WHERE c.codiceISBN IN (SELECT l.loanedItem FROM Loan l WHERE l.actualReturnDate = null AND l.user IN (SELECT u.membershipNumber FROM User u WHERE u.membershipNumber = :membershipNumber))")
 public abstract class Catalog {
     @Id
     @Column(name = "i_s_b_n_code")
@@ -19,8 +22,8 @@ public abstract class Catalog {
     @Column(name = "pages_number")
     private int numeroPagine;
 
-    @OneToOne(mappedBy = "loanedItem", cascade = CascadeType.REMOVE)
-    private Loan loan;
+    @OneToMany(mappedBy = "loanedItem", cascade = CascadeType.REMOVE)
+    private List<Loan> loans;
 
     public Catalog() {
     }

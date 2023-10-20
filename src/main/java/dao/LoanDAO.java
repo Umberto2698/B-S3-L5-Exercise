@@ -1,11 +1,11 @@
 package dao;
 
-import entities.Catalog;
 import entities.Loan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -38,9 +38,10 @@ public class LoanDAO {
         return em.find(Loan.class, id);
     }
 
-    public List<Catalog> getLoanedElementsByUser(long mebershipNumber) {
-        TypedQuery<Catalog> getElements = em.createNamedQuery("getLoanedElementsFromUser", Catalog.class);
-        getElements.setParameter("membershipNumber", mebershipNumber);
+    public List<Loan> getExpiredLoans() {
+        TypedQuery<Loan> getElements = em.createNamedQuery("getExpiredLoans", Loan.class);
+        LocalDate today = LocalDate.now();
+        getElements.setParameter("today", today);
         return getElements.getResultList();
     }
 

@@ -5,19 +5,19 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@NamedQuery(name = "getLoanedElementsFromUser", query = "SELECT c FROM Catalog c WHERE c.codiceISBN IN (SELECT l.loanedItem FROM Loan l WHERE l.actualReturnDate = null AND l.user IN (SELECT u.membershipNumber FROM User u WHERE u.membershipNumber = :membershipNumber))")
+@NamedQuery(name = "getExpiredLoans", query = "SELECT l FROM Loan l WHERE l.actualReturnDate = null AND l.expectedReturnDate < :today")
 public class Loan {
     @Id
     private String id;
     @ManyToOne
-    @JoinColumn(name = "user_membership_number")
+    @JoinColumn(name = "user_membership_number", nullable = false)
     private User user;
-    @OneToOne
-    @JoinColumn(name = "loaned_item_id")
+    @ManyToOne
+    @JoinColumn(name = "loaned_item_id0", nullable = false)
     private Catalog loanedItem;
-    @Column(name = "loan_start_date")
+    @Column(name = "loan_start_date", nullable = false)
     private LocalDate loanStartDate;
-    @Column(name = "expected_return_date")
+    @Column(name = "expected_return_date", nullable = false)
     private LocalDate expectedReturnDate;
     @Column(name = "actual_return_date")
     private LocalDate actualReturnDate;

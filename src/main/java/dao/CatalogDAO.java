@@ -28,32 +28,38 @@ public class CatalogDAO {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-            System.err.println("Errore durante il salvataggio dell'Evento." + e);
+            System.err.println("Errore durante il salvataggio dell'elemento." + e);
             throw e;
         }
     }
 
-    public List<Catalog> getByISBNCode(long code) {
-        TypedQuery<Catalog> getElements = em.createQuery("SELECT c FROM Catalog c WHERE c.codiceISBN = :code", Catalog.class);
+    public List<Catalog> getFromISBNCode(long code) {
+        TypedQuery<Catalog> getElements = em.createNamedQuery("findFromISBNCode", Catalog.class);
         getElements.setParameter("code", code);
         return getElements.getResultList();
     }
 
-    public List<Catalog> getByPubblicationYear(int year) {
-        TypedQuery<Catalog> getElements = em.createNamedQuery("findByPubblicationYear", Catalog.class);
+    public List<Catalog> getFromPubblicationYear(int year) {
+        TypedQuery<Catalog> getElements = em.createNamedQuery("findFromPubblicationYear", Catalog.class);
         getElements.setParameter("year", year);
         return getElements.getResultList();
     }
 
-    public List<Catalog> getByAuthor(String author) {
-        TypedQuery<Catalog> getElements = em.createNamedQuery("findByAuthor", Catalog.class);
+    public List<Catalog> getFromAuthor(String author) {
+        TypedQuery<Catalog> getElements = em.createNamedQuery("findFromAuthor", Catalog.class);
         getElements.setParameter("author", author);
         return getElements.getResultList();
     }
 
-    public List<Catalog> getByTitle(String title) {
-        TypedQuery<Catalog> getElements = em.createNamedQuery("findByTitle", Catalog.class);
+    public List<Catalog> getFromTitle(String title) {
+        TypedQuery<Catalog> getElements = em.createNamedQuery("findFromTitle", Catalog.class);
         getElements.setParameter("title", title);
+        return getElements.getResultList();
+    }
+
+    public List<Catalog> getLoanedElementsFomUser(long mebershipNumber) {
+        TypedQuery<Catalog> getElements = em.createNamedQuery("getLoanedElementsFromUser", Catalog.class);
+        getElements.setParameter("membershipNumber", mebershipNumber);
         return getElements.getResultList();
     }
 
