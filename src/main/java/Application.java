@@ -39,9 +39,9 @@ public class Application {
 //            User u1 = uDAO.getById(2856654481761L);
 //            User u2 = uDAO.getById(5306475808095L);
 //            User u3 = uDAO.getById(1810593753628L);
-            cDAO.getByPubblicationYear(1796).forEach(System.out::println);
+//            cDAO.getByPubblicationYear(1796).forEach(System.out::println);
 //            Catalog c1 = cDAO.getByPubblicationYear(1796).get(0);
-            cDAO.getByAuthor("Orfeo Caruso").forEach(System.out::println);
+//           cDAO.getByAuthor("Orfeo Caruso").forEach(System.out::println);
 //            Catalog c2 = cDAO.getByAuthor("Orfeo Caruso").get(0);
 
 //            Loan loanFromSupplier1 = loanSupplier.get();
@@ -58,7 +58,7 @@ public class Application {
 //                Loan randomLoan = new Loan(loanFromSupplier.getId(), u3, catalog, LocalDate.now().minusDays(24), null);
 //                lDAO.save(randomLoan);
 //            }
-//            lDAO.getLoanedElementsByUser(2856654481761L);
+            lDAO.getLoanedElementsByUser(1810593753628L).forEach(System.out::println);
         } catch (Exception e) {
             System.out.println(e);
         } finally {

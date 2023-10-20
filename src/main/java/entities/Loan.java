@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@NamedQuery(name = "getLoanedElementsFromUser", query = "SELECT l.loanedItem FROM Loan l WHERE l.user.membershipNumber = :membershipNumber")
+@NamedQuery(name = "getLoanedElementsFromUser", query = "SELECT c FROM Catalog c WHERE c.codiceISBN IN (SELECT l.loanedItem FROM Loan l WHERE l.actualReturnDate = null AND l.user IN (SELECT u.membershipNumber FROM User u WHERE u.membershipNumber = :membershipNumber))")
 public class Loan {
     @Id
     private String id;
