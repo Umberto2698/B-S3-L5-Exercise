@@ -45,9 +45,15 @@ public class CatalogDAO {
     }
 
     public List<Book> getByAuthor(String author) {
-        TypedQuery<Book> getElemets = em.createNamedQuery("findByAuthor", Book.class);
-        getElemets.setParameter("author", author);
-        return getElemets.getResultList();
+        TypedQuery<Book> getElements = em.createNamedQuery("findByAuthor", Book.class);
+        getElements.setParameter("author", author);
+        return getElements.getResultList();
+    }
+
+    public List<Catalog> getByTitle(String title) {
+        TypedQuery<Catalog> getElements = em.createNamedQuery("findByTitle", Catalog.class);
+        getElements.setParameter("title", title);
+        return getElements.getResultList();
     }
 
     public void deletebyISBNCode(long id) throws InterruptedException {

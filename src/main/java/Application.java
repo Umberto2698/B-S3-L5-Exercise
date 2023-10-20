@@ -46,6 +46,7 @@ public class Application {
 //            }
             cDAO.getByPubblicationYear(1550).forEach(System.out::println);
             cDAO.getByAuthor("Clea Ruggiero").forEach(System.out::println);
+            cDAO.getByTitle("T").forEach(System.out::println);
         } catch (Exception e) {
             System.out.println(e);
         } finally {
