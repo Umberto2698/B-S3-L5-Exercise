@@ -1,22 +1,21 @@
 package dao;
 
-import entities.Generic;
+import entities.Catalog;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-
-public class GenericDAO {
+public class CatalogDAO {
     private final EntityManager em;
 
-    public GenericDAO(EntityManager em) {this.em=em;}
-    public void save(Generic p) {
+    public CatalogDAO(EntityManager em) {this.em=em;}
+    public void save(Catalog catalog) {
         EntityTransaction transaction = em.getTransaction();
         try {
             transaction.begin();
-            em.persist(p);
+            em.persist(catalog);
             transaction.commit();
-            System.out.println("Event salvatao correttamente: " + p);
+            System.out.println("Elemento salvato correttamente: " + catalog);
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
@@ -26,24 +25,24 @@ public class GenericDAO {
         }
     }
 
-    public Generic getById(long id) {
-        return em.find(Generic.class, id);
+    public Catalog getById(long id) {
+        return em.find(Catalog.class, id);
     }
 
     public void delete(long id ) {
-        Generic p = em.find(Generic.class, id);
-        if (p != null) {
+        Catalog catalog = em.find(Catalog.class, id);
+        if (catalog != null) {
             EntityTransaction transaction = em.getTransaction();
             try {
                 transaction.begin();
-                em.remove(p);
+                em.remove(catalog);
                 transaction.commit();
-                System.out.println("Evento eliminato correttamente: " + p);
+                System.out.println("Elemento eliminato correttamente: " + catalog);
             } catch (Exception e) {
                 if (transaction.isActive()) {
                     transaction.rollback();
                 }
-                System.err.println("Errore durante l'eliminazione dell'Evento." + e);
+                System.err.println("Errore durante l'eliminazione dell'elemento." + e);
                 throw e;
             }
         }
