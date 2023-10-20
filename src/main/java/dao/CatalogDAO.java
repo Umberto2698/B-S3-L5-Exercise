@@ -1,6 +1,5 @@
 package dao;
 
-import entities.Book;
 import entities.Catalog;
 
 import javax.persistence.EntityManager;
@@ -34,8 +33,10 @@ public class CatalogDAO {
         }
     }
 
-    public Catalog getByISBNCode(long id) {
-        return em.find(Catalog.class, id);
+    public List<Catalog> getByISBNCode(long code) {
+        TypedQuery<Catalog> getElements = em.createQuery("SELECT c FROM Catalog c WHERE c.codiceISBN = :code", Catalog.class);
+        getElements.setParameter("code", code);
+        return getElements.getResultList();
     }
 
     public List<Catalog> getByPubblicationYear(int year) {
@@ -44,8 +45,8 @@ public class CatalogDAO {
         return getElements.getResultList();
     }
 
-    public List<Book> getByAuthor(String author) {
-        TypedQuery<Book> getElements = em.createNamedQuery("findByAuthor", Book.class);
+    public List<Catalog> getByAuthor(String author) {
+        TypedQuery<Catalog> getElements = em.createNamedQuery("findByAuthor", Catalog.class);
         getElements.setParameter("author", author);
         return getElements.getResultList();
     }

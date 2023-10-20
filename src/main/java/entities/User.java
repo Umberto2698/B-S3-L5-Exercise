@@ -2,16 +2,14 @@ package entities;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Random;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
     @Column(name = "membership_number")
-    private UUID membershipNumber;
+    private long membershipNumber;
     private String name;
     private String surname;
     private LocalDate birtday;
@@ -25,7 +23,7 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.birtday = birtday;
-        this.membershipNumber = UUID.randomUUID();
+        this.membershipNumber = (new Random().nextLong(1000000000000L, 10000000000000L));
     }
 
     @Override
@@ -38,11 +36,7 @@ public class User {
                 '}';
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public UUID getMembershipNumber() {
+    public long getMembershipNumber() {
         return membershipNumber;
     }
 

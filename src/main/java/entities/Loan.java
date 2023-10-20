@@ -5,11 +5,12 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
+@NamedQuery(name = "getLoanedElementsFromUser", query = "SELECT l.loanedItem FROM Loan l WHERE l.user.membershipNumber = :membershipNumber")
 public class Loan {
     @Id
     private String id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_membership_number")
     private User user;
     @OneToOne
     @JoinColumn(name = "loaned_item_id")

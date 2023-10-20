@@ -1,9 +1,12 @@
 package dao;
 
+import entities.Catalog;
 import entities.Loan;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class LoanDAO {
@@ -33,6 +36,12 @@ public class LoanDAO {
 
     public Loan getById(String id) {
         return em.find(Loan.class, id);
+    }
+
+    public List<Catalog> getLoanedElementsByUser(long mebershipNumber) {
+        TypedQuery<Catalog> getElements = em.createNamedQuery("getLoanedElementsFromUser", Catalog.class);
+        getElements.setParameter("membershipNumber", mebershipNumber);
+        return getElements.getResultList();
     }
 
     public void delete(long id) throws InterruptedException {

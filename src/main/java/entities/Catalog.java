@@ -6,7 +6,7 @@ import java.util.Random;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @NamedQuery(name = "findByPubblicationYear", query = "SELECT c FROM Catalog c WHERE c.annoDiPubblicazione = :year")
-@NamedQuery(name = "findByAuthor", query = "SELECT b FROM Book b WHERE b.autore LIKE :author")
+@NamedQuery(name = "findByAuthor", query = "SELECT c FROM Catalog c WHERE c.autore IN (SELECT b.autore FROM Book b WHERE LOWER(b.autore) LIKE LOWER(:author))")
 @NamedQuery(name = "findByTitle", query = "SELECT c FROM Catalog c WHERE LOWER(c.titolo) LIKE LOWER(CONCAT(:title, '%'))")
 public abstract class Catalog {
     @Id

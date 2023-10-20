@@ -36,17 +36,29 @@ public class Application {
 //                cDAO.save(magazineSupplier.get());
 //                uDAO.save(userSupplier.get());
 //            }
-//            for (int i = 0; i < 10; i++) {
-//                long rdn = new Random().nextLong(1, 5);
-//                User randomUser = uDAO.getById(rdn);
+//            User u1 = uDAO.getById(2856654481761L);
+//            User u2 = uDAO.getById(5306475808095L);
+//            User u3 = uDAO.getById(1810593753628L);
+            cDAO.getByPubblicationYear(1796).forEach(System.out::println);
+//            Catalog c1 = cDAO.getByPubblicationYear(1796).get(0);
+            cDAO.getByAuthor("Orfeo Caruso").forEach(System.out::println);
+//            Catalog c2 = cDAO.getByAuthor("Orfeo Caruso").get(0);
+
+//            Loan loanFromSupplier1 = loanSupplier.get();
+//            Loan l1 = new Loan(loanFromSupplier1.getId(), u1,c1, loanFromSupplier1.getLoanStartDate(), loanFromSupplier1.getActualReturnDate());
+//            lDAO.save(l1);
+//            Loan loanFromSupplier2 = loanSupplier.get();
+//            Loan l2 = new Loan(loanFromSupplier2.getId(), u2, c2, loanFromSupplier2.getLoanStartDate(), loanFromSupplier2.getActualReturnDate());
+//            lDAO.save(l2);
 //
+//            cDAO.getByTitle("T").forEach(System.out::println);
+//            List<Catalog> catalogList = cDAO.getByTitle("T");
+//            for (Catalog catalog : catalogList) {
 //                Loan loanFromSupplier = loanSupplier.get();
-//                Loan randomLoan = new Loan(loanFromSupplier.getId(), randomUser, randomElem, loanFromSupplier.getLoanStartDate(), loanFromSupplier.getActualReturnDate());
+//                Loan randomLoan = new Loan(loanFromSupplier.getId(), u3, catalog, LocalDate.now().minusDays(24), null);
 //                lDAO.save(randomLoan);
 //            }
-            cDAO.getByPubblicationYear(1550).forEach(System.out::println);
-            cDAO.getByAuthor("Clea Ruggiero").forEach(System.out::println);
-            cDAO.getByTitle("T").forEach(System.out::println);
+//            lDAO.getLoanedElementsByUser(2856654481761L);
         } catch (Exception e) {
             System.out.println(e);
         } finally {
